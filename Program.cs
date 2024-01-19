@@ -6,6 +6,13 @@ using System.Threading;
 using System.Diagnostics;
 namespace MainProgram
 {
+    public static class miliseconds
+    {
+        public static DateTime TrimMilliseconds(this DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Kind);
+        }
+    }
     public class Program
     {
 
@@ -37,30 +44,19 @@ namespace MainProgram
                 Console.WriteLine($"Periodic Time: {stopwatch.ElapsedMilliseconds}");
 
                 // Just Compares the current to whatever i set
-                int Timeresult = DateTime.Compare(now, seconds);
-                if (Timeresult < 0)
+
+
+                DateTime current = now.TrimMilliseconds();
+                DateTime goal = seconds.TrimMilliseconds();
+
+                if (current == goal)
                 {
-                    Console.WriteLine("not right now");
-                }
-                else if (Timeresult == 0)
-                {
-                    // TODO Fix this, reason why as to this wont work cause the miliseconds are time apart
-                    // TODO just unironically do a if else compare lOL : Implement the ff below
-                    // public static DateTime TrimMilliseconds(this DateTime dt)
-                    // {
-                    //     return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Kind);
-                    // }
                     Console.WriteLine("NOW");
-
-
-                }
-                else
-                {
-                    Console.WriteLine("Passed");
                     break;
+                    
                 }
 
-                // TODO: move the current list head to the next when it reaches Timeresult == 0;
+                Console.WriteLine("not now");
 
             }
 
@@ -80,6 +76,8 @@ namespace MainProgram
         {
             var DateStored = new List<dynamic>();
         }
+
+
     }
 }
 
