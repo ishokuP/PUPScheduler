@@ -1,30 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Diagnostics;
-using Microsoft.VisualBasic.FileIO;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.FileIO;
+
 namespace MainProgram
 {
-
-
-
     public class Program
     {
-
+        private const string CsvFilePath = "sample2.csv";
         private static List<EventData> eventsData;
 
-        // Program For the Timer
         static async Task Main(string[] args)
         {
-            loadCSV("sample2.csv");
+            LoadCSV(CsvFilePath);
             await UpdateEverySecond();
-
         }
 
-        static void loadCSV(string filePath)
+        static void LoadCSV(string filePath)
         {
             eventsData = new List<EventData>();
 
@@ -60,69 +53,80 @@ namespace MainProgram
                 Console.WriteLine($"Error loading CSV file: {ex.Message}");
             }
         }
-        // Update A Theoretical Clock Every Second
+
         static async Task UpdateEverySecond()
         {
             var periodicTimer = new PeriodicTimer(TimeSpan.FromMilliseconds(1000));
-            DateTime seconds = DateTime.Now.AddSeconds(5);
-            DateTime seconds2 = seconds.AddSeconds(5);
-            // Inside the UpdateEverySecond method
+
             while (await periodicTimer.WaitForNextTickAsync())
             {
                 DateTime now = DateTime.Now;
 
-                Console.Write("Current Date is : ");
-                Console.WriteLine(now.ToString("dddd, MMMM dd yyyy"));
-                Console.Write("Current Time is : ");
-                Console.WriteLine(now.ToString("hh mm ss"));
-
-                Console.WriteLine("Event Times for Today:");
-
-                DayOfWeek currentDay = now.DayOfWeek;
-
-                foreach (var eventData in eventsData)
-                {
-                    // Check if the event day matches the current day
-                    if (currentDay == eventData.DayOfWeek)
-                    {
-                        Console.WriteLine($"{eventData.DayOfWeek}, {eventData.StartTime} to {eventData.EndTime} - {eventData.EventName}");
-
-                        DateTime current = now.TrimMilliseconds();
-                        DateTime goal = DateTime.Today.Add(eventData.StartTime).TrimMilliseconds();
-                        DateTime goal2 = DateTime.Today.Add(eventData.EndTime).TrimMilliseconds();
-                        Console.WriteLine($"goal is " + goal + " to " + goal2);
-
-                        Console.WriteLine("taskState: ");
-
-                        if (current < goal)
-                        {
-                            Console.WriteLine("not yet");
-                        }
-                        else if (current >= goal && current <= goal2)
-                        {
-                            Console.WriteLine("ongoing task");
-                        }
-                        else
-                        {
-                            Console.WriteLine("finished task");
-                        }
-                        Console.WriteLine("");
-
-                    }
-                }
+                PrintCurrentDateTime(now);
+                PrintEventTimesForToday(now);
 
                 await SomeLongTask();
                 Console.Clear();
             }
-
-
         }
+
+        static void PrintCurrentDateTime(DateTime dateTime)
+        {
+            Console.Write("Current Date is : ");
+            Console.WriteLine(dateTime.ToString("dddd, MMMM dd yyyy"));
+            Console.Write("Current Time is : ");
+            Console.WriteLine(dateTime.ToString("hh mm ss"));
+        }
+
+        static void PrintEventTimesForToday(DateTime now)
+        {
+            DayOfWeek currentDay = now.DayOfWeek;
+
+            Console.WriteLine("Event Times for Today:");
+
+            foreach (var eventData in eventsData)
+            {
+                if (currentDay == eventData.DayOfWeek)
+                {
+                    PrintEventDataDetails(now, eventData);
+                }
+            }
+        }
+
+        static void PrintEventDataDetails(DateTime now, EventData eventData)
+        {
+            Console.WriteLine($"{eventData.DayOfWeek}, {eventData.StartTime} to {eventData.EndTime} - {eventData.EventName}");
+
+            DateTime current = now.TrimMilliseconds();
+            DateTime goal = DateTime.Today.Add(eventData.StartTime).TrimMilliseconds();
+            DateTime goal2 = DateTime.Today.Add(eventData.EndTime).TrimMilliseconds();
+
+            Console.WriteLine($"goal is {goal} to {goal2}");
+
+            Console.WriteLine("taskState: ");
+
+            if (current < goal)
+            {
+                Console.WriteLine("not yet");
+            }
+            else if (current >= goal && current <= goal2)
+            {
+                Console.WriteLine("ongoing task");
+            }
+            else
+            {
+                Console.WriteLine("finished task");
+            }
+
+            Console.WriteLine("");
+        }
+
         static async Task SomeLongTask()
         {
             await Task.Delay(1000);
         }
-
     }
+
     public class EventData
     {
         public DayOfWeek DayOfWeek { get; set; }
@@ -130,21 +134,12 @@ namespace MainProgram
         public TimeSpan EndTime { get; set; }
         public string EventName { get; set; }
     }
-    public static class miliseconds
+
+    public static class Miliseconds
     {
         public static DateTime TrimMilliseconds(this DateTime dt)
         {
             return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Kind);
         }
     }
-
 }
-
-
-
-
-// Current Time : xxxxx
-// Current Event : xxxxxx
-// Next Event : xxxxx
-// Time till next event : xxxx
-
