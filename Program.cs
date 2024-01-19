@@ -88,8 +88,9 @@ namespace MainProgram
                         Console.WriteLine($"{eventData.DayOfWeek}, {eventData.StartTime} to {eventData.EndTime} - {eventData.EventName}");
 
                         DateTime current = now.TrimMilliseconds();
-                        DateTime goal = DateTime.Today.Add(eventData.StartTime);
-                        DateTime goal2 = DateTime.Today.Add(eventData.EndTime);
+                        DateTime goal = DateTime.Today.Add(eventData.StartTime).TrimMilliseconds();
+                        DateTime goal2 = DateTime.Today.Add(eventData.EndTime).TrimMilliseconds();
+                        Console.WriteLine($"goal is " + goal + " to " + goal2);
 
                         Console.WriteLine("taskState: ");
 
@@ -105,6 +106,8 @@ namespace MainProgram
                         {
                             Console.WriteLine("finished task");
                         }
+                        Console.WriteLine("");
+
                     }
                 }
 
