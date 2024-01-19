@@ -4,15 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using Microsoft.VisualBasic.FileIO;
 namespace MainProgram
 {
-    public static class miliseconds
-    {
-        public static DateTime TrimMilliseconds(this DateTime dt)
-        {
-            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Kind);
-        }
-    }
+
     public class Program
     {
 
@@ -20,50 +15,81 @@ namespace MainProgram
         static async Task Main(string[] args)
         {
 
+            // 
+
             await UpdateEverySecond();
+            // using (TextFieldParser parser = new TextFieldParser("sampletime.csv"))
+            // {
+
+            //     parser.SetDelimiters(",");
+
+            //     while (!parser.EndOfData)
+            //     {
+            //         string[]? fields = parser.ReadFields();
+            //         if (fields is not null)
+            //         {
+            //             foreach (var field in fields)
+            //             {
+            //                 Console.WriteLine(field);
+            //             }
+            //         }
+
+            //     }
+            // }
 
         }
         // Update A Theoretical Clock Every Second
         static async Task UpdateEverySecond()
         {
-            var stopwatch = Stopwatch.StartNew();
             var periodicTimer = new PeriodicTimer(TimeSpan.FromMilliseconds(1000));
             DateTime seconds = DateTime.Now.AddSeconds(5);
+            DateTime seconds2 = seconds.AddSeconds(5);
             while (await periodicTimer.WaitForNextTickAsync())
             {
                 DateTime now = DateTime.Now;
 
-
-                // Console.Write("Current Date is : ");
-                // Console.WriteLine(now.ToString("dddd, MMMM dd yyyy"));
+                Console.Write("Current Date is : ");
+                Console.WriteLine(now.ToString("dddd, MMMM dd yyyy"));
                 Console.Write("Current Time is : ");
                 Console.WriteLine(now.ToString("hh mm ss fffffff"));
-                Console.Write("Target Time is  : ");
+                Console.Write("From : ");
                 Console.WriteLine(seconds.ToString("hh mm ss fffffff"));
-                // await SomeLongTask();
-                Console.WriteLine($"Periodic Time: {stopwatch.ElapsedMilliseconds}");
+                Console.Write("to : ");
+                Console.WriteLine(seconds2.ToString("hh mm ss fffffff"));
+
+                Console.WriteLine("Current Event is ");
+
+
 
                 // Just Compares the current to whatever i set
-
-
                 DateTime current = now.TrimMilliseconds();
                 DateTime goal = seconds.TrimMilliseconds();
+                DateTime goal2 = seconds2.TrimMilliseconds();
 
-                if (current == goal)
+                Console.WriteLine("taskState: ");
+
+                // TODO Detect the time in between and greater than equal to
+                if (current < goal)
                 {
-                    Console.WriteLine("NOW");
-                    break;
-                    
+                    Console.WriteLine("not yet");
+
+                } else if (current >= goal && current <= goal2)
+                {
+                    Console.WriteLine("ongoing task");
+                }
+                else{
+                    Console.WriteLine("finished task");
                 }
 
-                Console.WriteLine("not now");
+                await SomeLongTask();
+                Console.Clear();
 
             }
 
         }
         static async Task SomeLongTask()
         {
-            await Task.Delay(250);
+            await Task.Delay(1000);
         }
 
         public bool Timechecker()
@@ -78,6 +104,24 @@ namespace MainProgram
         }
 
 
+
+
     }
+    public static class miliseconds
+    {
+        public static DateTime TrimMilliseconds(this DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, 0, dt.Kind);
+        }
+    }
+
 }
+
+
+
+
+// Current Time : xxxxx
+// Current Event : xxxxxx
+// Next Event : xxxxx
+// Time till next event : xxxx
 

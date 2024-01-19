@@ -1,0 +1,10 @@
+Day,StartTime,EndTime,EventName
+Monday,08:00:00,10:00:00,Meeting with Team
+Monday,12:00:00,14:00:00,Client Call
+Tuesday,09:30:00,11:30:00,Project Review
+Tuesday,14:00:00,16:00:00,Training Session
+Wednesday,11:00:00,13:00:00,Team Building
+Wednesday,15:00:00,17:00:00,Client Presentation
+Thursday,13:30:00,15:30:00,Internal Workshop
+Thursday,18:00:00,20:00:00,Networking Event
+Friday,15:00:00,16:30:00,Weekly Wrap-up
