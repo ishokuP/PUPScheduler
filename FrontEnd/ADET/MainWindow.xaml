@@ -1,0 +1,43 @@
+﻿<Window x:Class="ADET.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADET"
+        mc:Ignorable="d"
+        Title="PUP Scheduler" Height="600" Width="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFC1BBBB" Offset="0.201"/>
+                <GradientStop Color="#FF6D0202" Offset="0.217"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="191*"/>
+            <RowDefinition Height="168*"/>
+            <RowDefinition Height="125*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="52*"/>
+            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition Width="105*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Viewbox Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel>
+                <Image Source="/PUPLogo.png"/>
+            </StackPanel>
+        </Viewbox>
+        <Button x:Name="add_sched" Margin="19,44,29,26" Click="Button_Click" Background="Black" Foreground="#FFEAEAEA" FontFamily="Microsoft YaHei UI" Grid.IsSharedSizeScope="True" Grid.Row="3" Grid.Column="2">Add Schedule</Button>
+        <Label x:Name="Proj_Name" FontFamily="Bookman Old Style" FontSize="36" Content="PUP Scheduler" Margin="1,42,183,190" RenderTransformOrigin="0.933,0.604" Foreground="Maroon" Grid.Column="1" Grid.RowSpan="2"/>
+        <DatePicker HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" SelectedDateFormat="Short" Height="44" Width="161" Grid.Column="2"/>
+        <TextBlock x:Name="Upcoming_event" HorizontalAlignment="Left" Margin="121,77,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="29" Width="350" FontFamily="Microsoft YaHei UI" FontSize="16" Foreground="GhostWhite" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Upcoming Event:" Margin="25,10,341,115" FontFamily="Microsoft YaHei UI" FontSize="16" Foreground="WhiteSmoke" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Label Content="Current Event:" Margin="35,57,362,95" FontFamily="Microsoft YaHei" FontSize="16" Foreground="WhiteSmoke" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="Current_event" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="29" Width="350" FontFamily="Microsoft YaHei UI" FontSize="16" Foreground="GhostWhite" Margin="121,109,0,0" Grid.Row="1" Grid.Column="1"/>
+
+    </Grid>
+</Window>
